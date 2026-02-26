@@ -1,0 +1,22 @@
+# Node
+node_modules/
+
+# Subproject node_modules
+news/node_modules/
+Backend/node_modules/
+
+# Build outputs
+dist/
+build/
+
+# Environment
+.env
+
+# VS Code
+.vscode/
+
+# OS files
+.DS_Store
+
+# Logs
+npm-debug.log*
