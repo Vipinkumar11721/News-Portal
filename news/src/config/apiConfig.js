@@ -1,5 +1,6 @@
 // API Base URL configuration
-// Vite automatically loads VITE_ prefixed env variables
-const API_BASE_URL = import.meta.env.VITE_API_URL || 'http://localhost:9000/api';
+// Use relative URL when frontend and backend are on the same server (production)
+// Use full URL for local development
+const API_BASE_URL = import.meta.env.VITE_API_URL || '/api';
 
 export default API_BASE_URL;
