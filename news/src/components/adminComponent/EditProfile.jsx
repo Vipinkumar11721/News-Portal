@@ -53,7 +53,7 @@ const EditProfile = () => {
       })
       return;
     }
-    const response = await axios.put('http://localhost:9000/api/user-update', formData, {
+    const response = await axios.put(`${API_BASE_URL}/user-update`, formData, {
       headers: {
         'Content-Type': 'multipart/form-data'
       }

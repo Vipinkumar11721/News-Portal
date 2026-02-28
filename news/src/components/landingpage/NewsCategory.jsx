@@ -19,7 +19,7 @@ function NewsCategory() {
   }, []);
 
   const fetchData = async () => {
-    const response = await axios.get("http://localhost:9000/api/top-category");
+    const response = await axios.get(`${API_BASE_URL}/top-category`);
     if (response?.data?.code === 200) {
       setData(response?.data?.data);
     }

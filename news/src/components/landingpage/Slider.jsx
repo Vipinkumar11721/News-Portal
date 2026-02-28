@@ -1,4 +1,5 @@
 import axios from 'axios';
+import API_BASE_URL from '../../config/apiConfig';
 import React, { useEffect, useState } from 'react'
 import { IoNewspaperSharp } from "react-icons/io5";
 import { useNavigate } from 'react-router-dom';
@@ -14,7 +15,7 @@ function Slid() {
   }, [])
 
   const fetchData = async () => {
-    const response = await axios.get('http://localhost:9000/api/top-ten-news');
+    const response = await axios.get(`${API_BASE_URL}/top-ten-news`);
     if (response?.data?.code == 200) {
       setData(response?.data?.data)
     }

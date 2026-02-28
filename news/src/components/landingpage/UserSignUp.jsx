@@ -46,7 +46,7 @@ const UserSignUp = () => {
       return;
     }
     const response = await axios.post(
-      "http://localhost:9000/api/user-register",
+      `${API_BASE_URL}/user-register`,
       formData,
       {
         headers: {

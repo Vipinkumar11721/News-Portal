@@ -4,6 +4,7 @@ import { useForm } from 'react-hook-form';
 import { yupResolver } from '@hookform/resolvers/yup';
 import * as yup from 'yup';
 import axios from 'axios';
+import API_BASE_URL from '../../config/apiConfig';
 import Swal from 'sweetalert2';
 import { useNavigate } from 'react-router-dom'
 import Navbar from './Navbar';
@@ -21,7 +22,7 @@ const Login = () => {
   });
 
   const handleLogin = async (data) => {
-    const response = await axios.post('http://localhost:9000/api/login', data);
+    const response = await axios.post(`${API_BASE_URL}/login`, data);
     if (response?.data?.code == 200) {
       Swal.fire({
         title: "Login",

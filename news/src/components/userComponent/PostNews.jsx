@@ -5,6 +5,7 @@ import { yupResolver } from '@hookform/resolvers/yup';
 import * as yup from 'yup';
 import Navbar from '../landingpage/Navbar';
 import axios from 'axios';
+import API_BASE_URL from '../../config/apiConfig';
 import Swal from 'sweetalert2';
 import { useNavigate } from 'react-router-dom';
 const Newsschema = yup
@@ -25,7 +26,7 @@ const PostNews = () => {
   const handleAddNews = async (data) => {
     const user = JSON.parse(localStorage.getItem('userInfo'));
     const finalObj = { ...data, userId: user?._id };
-    const response = await axios.post('http://localhost:9000/api/add-news', finalObj)
+    const response = await axios.post(`${API_BASE_URL}/add-news`, finalObj)
     if (response?.data?.code == 200) {
       Swal.fire({
         title: "News add",

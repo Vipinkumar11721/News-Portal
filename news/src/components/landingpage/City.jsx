@@ -2,6 +2,7 @@ import React, { useState, useEffect } from "react";
 import Navbar from "./Navbar";
 import { useLocation, useNavigate } from "react-router-dom";
 import axios from "axios";
+import API_BASE_URL from '../../config/apiConfig';
 import NoRecordFound from "./NoRecordFound";
 import AOS from "aos";
 import "aos/dist/aos.css";
@@ -19,7 +20,7 @@ function City() {
   }, []);
 
   const fetchData = async () => {
-    const response = await axios.get("http://localhost:9000/api/top-city");
+    const response = await axios.get(`${API_BASE_URL}/top-city`);
     if (response?.data?.code === 200) {
       setData(response?.data?.data);
     }

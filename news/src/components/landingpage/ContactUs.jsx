@@ -8,6 +8,7 @@ import { useLocation } from 'react-router-dom';
 import { FaUser, FaEnvelope, FaPhone, FaComment, FaMapMarkerAlt } from 'react-icons/fa';
 import Navbar from './Navbar';
 import axios from 'axios';
+import API_BASE_URL from '../../config/apiConfig';
 import Swal from 'sweetalert2';
 // Form validation schema
 const schema = yup.object().shape({
@@ -38,7 +39,7 @@ const ContactUs = () => {
   });
 
   const handleContact =async (data) => {
-   const response=await axios.post('http://localhost:9000/api/add-contact-us',data);
+   const response=await axios.post(`${API_BASE_URL}/add-contact-us`,data);
    if(response?.data?.code==200){
      Swal.fire({
       title:"Contact US",

@@ -1,6 +1,7 @@
 import React, { useEffect, useState } from 'react'
 import Navbar from '../landingpage/Navbar'
 import axios from 'axios'
+import API_BASE_URL from '../../config/apiConfig';
 import Swal from 'sweetalert2'
 const AdminContactUsList = () => {
   const [data, setData] = useState([])
@@ -9,7 +10,7 @@ const AdminContactUsList = () => {
   }, [])
 
   const fetchData = async () => {
-    const response = await axios.get('http://localhost:9000/api/get-contact-us');
+    const response = await axios.get(`${API_BASE_URL}/get-contact-us`);
     if (response?.data?.code == 200) {
       setData(response?.data?.data)
     }

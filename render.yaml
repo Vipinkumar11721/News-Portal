@@ -1,0 +1,22 @@
+services:
+  - type: web
+    name: newsportal-backend
+    runtime: node
+    rootDir: Backend
+    buildCommand: npm install
+    startCommand: npm start
+    envVars:
+      - key: MONGOURI
+        scope: service
+        value: mongodb+srv://${DB_USER}:${DB_PASSWORD}@${DB_CLUSTER}/?retryWrites=true&w=majority
+      - key: NODE_ENV
+        value: production
+
+  - type: static_site
+    name: newsportal-frontend
+    rootDir: news
+    buildCommand: npm install && npm run build
+    publishPath: dist
+    envVars:
+      - key: VITE_API_URL
+        value: https://newsportal-backend.onrender.com/api

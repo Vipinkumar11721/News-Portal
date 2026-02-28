@@ -5,7 +5,7 @@ import router from './route/userRoute.js';
 import cors from 'cors';
 
 const app = express();
-const PORT = 9000;
+const PORT = process.env.PORT || 9000;
 
 app.use(express.json());
 app.use(fileUpload());

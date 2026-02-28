@@ -1,4 +1,5 @@
 import axios from 'axios';
+import API_BASE_URL from '../../config/apiConfig';
 import React, { useEffect, useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import NoRecordFound from './NoRecordFound';
@@ -17,21 +18,21 @@ function LatestNews() {
   }, []);
 
   const fetchCategory = async () => {
-    const response = await axios.get('http://localhost:9000/api/top-category');
+    const response = await axios.get(`${API_BASE_URL}/top-category`);
     if (response?.data?.code === 200) {
       setCatrgoryList(response?.data?.data?.slice(0, 5));
     }
   };
 
   const fetchTopNews = async () => {
-    const response = await axios.get('http://localhost:9000/api/top-ten-news');
+    const response = await axios.get(`${API_BASE_URL}/top-ten-news`);
     if (response?.data?.code === 200) {
       setNewsList(response?.data?.data?.slice(0, 3));
     }
   };
 
   const fetchCity = async () => {
-    const response = await axios.get('http://localhost:9000/api/top-city');
+    const response = await axios.get(`${API_BASE_URL}/top-city`);
     if (response?.data?.code === 200) {
       setCityList(response?.data?.data?.slice(0, 5));
     }
