@@ -1,7 +1,9 @@
 
-import React, { useEffect, useState } from 'react'
-import Navbar from '../landingpage/Navbar'
-import axios from 'axios'import API_BASE_URL from '../../config/apiConfig';import Swal from 'sweetalert2'
+import React, { useEffect, useState } from 'react';
+import Navbar from '../landingpage/Navbar';
+import axios from 'axios';
+import API_BASE_URL from '../../config/apiConfig';
+import Swal from 'sweetalert2';
 const AllNews = () => {
   const [newsList, setNewsList] = useState([])
   useEffect(() => {
