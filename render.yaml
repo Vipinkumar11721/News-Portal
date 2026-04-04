@@ -2,7 +2,7 @@ services:
   - type: web
     name: newsportal-backend
     runtime: node
-    buildCommand: npm run install:all && cd news && npx vite build
+    buildCommand: npm run install:all && npm run build:frontend
     startCommand: cd Backend && npm start
     envVars:
       - key: MONGOURI
