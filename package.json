@@ -7,7 +7,7 @@
     "install:backend": "cd Backend && npm install",
     "install:frontend": "cd news && npm install",
     "install:all": "npm run install:backend && npm run install:frontend",
-    "build:frontend": "cd news && ./node_modules/.bin/vite build",
+    "build:frontend": "npm --prefix news run build",
     "build": "npm run build:frontend",
     "start:backend": "cd Backend && npm start",
     "start": "npm run start:backend"
