@@ -2,11 +2,12 @@ services:
   - type: web
     name: newsportal-backend
     runtime: node
-    buildCommand: npm install && npm install --prefix ./news && npm run --prefix ./news build
+    buildCommand: npm run install:all && npm run build:frontend
     startCommand: cd Backend && npm start
     envVars:
       - key: MONGOURI
         scope: service
-        value: mongodb+srv://${DB_USER}:${DB_PASSWORD}@${DB_CLUSTER}/?retryWrites=true&w=majority
       - key: NODE_ENV
         value: production
+      - key: PORT
+        value: "3000"
