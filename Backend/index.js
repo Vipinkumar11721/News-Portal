@@ -27,6 +27,14 @@ dbConnect();
 
 app.use('/api', router);
 
+// Health check endpoint
+app.get('/health', (req, res) => {
+  res.json({ status: 'OK', message: 'News Portal Backend is running', timestamp: new Date().toISOString() });
+});
+
+// Serve uploaded files statically
+app.use('/uploads', express.static(path.join(__dirname, 'uploads')));
+
 // Serve static files from the frontend build directory
 const frontendPath = path.join(__dirname, '../news/dist');
 if (fs.existsSync(frontendPath)) {

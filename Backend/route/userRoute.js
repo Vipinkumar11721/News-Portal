@@ -1,5 +1,10 @@
 import express from 'express';
 import { userModel, newsModel,contactUsModel } from '../model/table.js';
+import path from 'path';
+import { fileURLToPath } from 'url';
+
+const __filename = fileURLToPath(import.meta.url);
+const __dirname = path.dirname(__filename);
 
 const router = express.Router();
 
@@ -8,7 +13,7 @@ router.post('/user-register', async (req, res) => {
       const { name, email, password, contact, address } = req.body;
       const { profile } = req.files;
 
-      profile.mv("uploads/" + profile.name, (err) => {
+      profile.mv(path.join(__dirname, "../uploads", profile.name), (err) => {
          if (err) {
             res.json({
                code: 400,
@@ -48,7 +53,7 @@ router.put('/user-update', async (req, res) => {
    try {
       const { name, email, password, contact, address, _id } = req.body;
       const { profile } = req.files;
-      profile.mv("uploads/" + profile.name, (err) => {
+      profile.mv(path.join(__dirname, "../uploads", profile.name), (err) => {
          if (err) {
             res.json({
                code: 400,
