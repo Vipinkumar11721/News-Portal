@@ -14,6 +14,7 @@ import ImageGallery from './components/landingpage/ImageGallery';
 import ContactUs from './components/landingpage/ContactUs';
 import UserSignUp from './components/landingpage/UserSignUp';
 import Login from './components/landingpage/Login';
+import AdminSignUp from './components/landingpage/AdminSignUp';
 import EditProfile from './components/adminComponent/EditProfile';
 import AllNews from './components/adminComponent/AllNews';
 import AdminContactUsList from './components/adminComponent/AdminContactUsList';
@@ -45,6 +46,7 @@ function App() {
         <Route path='/gallery' element={<ImageGallery />} />
         <Route path='/contact' element={<ContactUs />} />
         <Route path='/UserSignUp' element={<UserSignUp />} />
+        <Route path='/AdminSignUp' element={<AdminSignUp />} />
         <Route path='/login' element={<Login />} />
         <Route path='/news-details' element={<NewsDetails />} />
 

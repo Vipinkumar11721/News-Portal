@@ -12,6 +12,12 @@ build/
 # Environment
 .env
 
+# Local uploads
+Backend/uploads/
+
+# Temp files
+temp_file.js
+
 # VS Code
 .vscode/
 

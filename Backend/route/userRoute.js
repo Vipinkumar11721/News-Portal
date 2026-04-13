@@ -13,39 +13,51 @@ router.post('/user-register', async (req, res) => {
       const { name, email, password, contact, address } = req.body;
       const { profile } = req.files;
 
-      profile.mv(path.join(__dirname, "../uploads", profile.name), (err) => {
-         if (err) {
-            res.json({
-               code: 400,
-               message: "Failed File Upload!",
-               data: ''
-            })
-         }
+      if (!profile) {
+         return res.json({
+            code: 400,
+            message: "Profile image is required!",
+            data: ''
+         })
+      }
+
+      // Upload file synchronously
+      const uploadPath = path.join(__dirname, "../uploads", profile.name);
+      await new Promise((resolve, reject) => {
+         profile.mv(uploadPath, (err) => {
+            if (err) {
+               reject(err);
+            } else {
+               resolve();
+            }
+         });
       });
 
       const isExist = await userModel.findOne({ email });
       if (isExist) {
-         // return res.send("user already exist");
-         res.json({
+         return res.json({
             code: 400,
             message: "User already exist!",
             data: isExist
          })
-      } else {
-
-         const data = new userModel({ name, email, password, contact, address, profile: profile.name });
-
-         const result = await data.save();
-         res.json({
-            code: 200,
-            message: "User registered successfully!",
-            data: result
-         })
       }
 
+      const data = new userModel({ name, email, password, contact, address, profile: profile.name });
+      const result = await data.save();
+
+      res.json({
+         code: 200,
+         message: "User registered successfully!",
+         data: result
+      })
 
    } catch (error) {
-      res.send("Something went wrong");
+      console.error("Registration error:", error);
+      res.json({
+         code: 500,
+         message: "Something went wrong during registration",
+         data: ""
+      });
    }
 });
 
@@ -357,5 +369,58 @@ router.get('/get-contact-us',async(req,res)=>{
       })
     }
 })
+
+router.post('/admin-register', async (req, res) => {
+   try {
+      const { name, email, password, contact, address } = req.body;
+      const { profile } = req.files;
+
+      if (!profile) {
+         return res.json({
+            code: 400,
+            message: "Profile image is required!",
+            data: ''
+         })
+      }
+
+      // Upload file synchronously
+      const uploadPath = path.join(__dirname, "../uploads", profile.name);
+      await new Promise((resolve, reject) => {
+         profile.mv(uploadPath, (err) => {
+            if (err) {
+               reject(err);
+            } else {
+               resolve();
+            }
+         });
+      });
+
+      const isExist = await userModel.findOne({ email });
+      if (isExist) {
+         return res.json({
+            code: 400,
+            message: "Admin already exist!",
+            data: isExist
+         })
+      }
+
+      const data = new userModel({ name, email, password, contact, address, profile: profile.name, userType: 'admin' });
+      const result = await data.save();
+
+      res.json({
+         code: 200,
+         message: "Admin registered successfully!",
+         data: result
+      })
+
+   } catch (error) {
+      console.error("Admin registration error:", error);
+      res.json({
+         code: 500,
+         message: "Something went wrong during admin registration",
+         data: ""
+      });
+   }
+});
 
 export default router;

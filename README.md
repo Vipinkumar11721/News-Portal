@@ -20,7 +20,21 @@ NewsPortal/
 ## Prerequisites
 
 - Node.js (v14 or higher)
-- MongoDB (local or Atlas)
+- MongoDB (choose one option below)
+
+### MongoDB Setup Options
+
+#### Option 1: MongoDB Atlas (Recommended for Production)
+1. Go to [mongodb.com/atlas](https://www.mongodb.com/atlas)
+2. Create a free account and cluster
+3. Create a database user with username/password
+4. Get your connection string: `mongodb+srv://username:password@cluster.mongodb.net/`
+5. Add your IP address to Network Access (or use `0.0.0.0/0` for all IPs)
+
+#### Option 2: Local MongoDB (For Development)
+1. Download and install MongoDB Community Server from [mongodb.com](https://www.mongodb.com/try/download/community)
+2. Start MongoDB service
+3. Use default connection: `mongodb://localhost:27017/NewsPortal`
 
 ## Setup
 
@@ -35,7 +49,6 @@ Create a `.env` file in the Backend directory:
 ```env
 MONGOURI=mongodb+srv://username:password@cluster.mongodb.net/?retryWrites=true&w=majority
 NODE_ENV=production
-PORT=9000
 ```
 
 Start the backend:
@@ -51,15 +64,12 @@ cd news
 npm install
 ```
 
-Create a `.env` file in the news directory:
+Create a `.env` file in the news directory (for local development only):
 ```env
-VITE_API_URL=http://localhost:9000/api  # Local development
+VITE_API_URL=http://localhost:3000/api  # Local development
 ```
 
-For production (Render):
-```env
-VITE_API_URL=https://newsportal-backend.onrender.com/api
-```
+For production (Render), the API URL is relative (`/api`), so no environment variable is needed.
 
 Start the frontend:
 ```bash
@@ -75,42 +85,48 @@ npm run preview   # Preview production build
 1. Go to [render.com](https://render.com)
 2. Sign up and connect your GitHub account
 
-### 2. Add MongoDB Connection
+### 2. Create Admin User & Setup MongoDB
+To access the admin dashboard, you need to create an admin user:
 
-Before deploying, ensure you have a MongoDB Atlas cluster:
-1. Go to [MongoDB Atlas](https://www.mongodb.com/cloud/atlas)
-2. Create a cluster and get the connection string
-3. Add environment variables in Render dashboard
+1. Visit `https://your-app-url/AdminSignUp`
+2. Fill out the admin registration form
+3. Login with admin credentials at `https://your-app-url/login`
+4. Admin dashboard will be available at `https://your-app-url/admin-newslist`
+
+**MongoDB Atlas Setup (Required for Production):**
+1. Go to [mongodb.com/atlas](https://www.mongodb.com/atlas)
+2. Create a cluster and database user
+3. Get your connection string: `mongodb+srv://username:password@cluster.mongodb.net/newsportal`
+4. Add Render's IP addresses to Network Access (use `0.0.0.0/0` for all IPs)
+5. Test the connection string in your local `.env` file first
 
 ### 3. Deploy
 
-The `render.yaml` configuration allows Render to automatically deploy both services:
+The `render.yaml` configuration allows Render to automatically deploy the full-stack application:
 
-- **Backend**: Node.js web service on port 9000
-- **Frontend**: Static site built from `news/dist`
+- **Service**: Node.js web service that serves both backend API and frontend static files
+- **Build Command**: `npm run install:all && npm run build:frontend`
+- **Start Command**: `cd Backend && npm start`
 
 Click "Deploy" in your Render dashboard and Render will:
-1. Handle the build process for both services
-2. Set environment variables
-3. Deploy to production URLs
+1. Install all dependencies
+2. Build the React frontend
+3. Start the Node.js server
+4. Serve the application at your Render URL
 
 ### 4. Set Environment Variables in Render
 
 In Render Dashboard → Environment:
-
-**For Backend Service:**
 - `MONGOURI`: `mongodb+srv://username:password@cluster.mongodb.net/?retryWrites=true&w=majority`
 - `NODE_ENV`: `production`
-
-**For Frontend Service:**
-- `VITE_API_URL`: (automatically set to your backend URL)
 
 ## Available API Endpoints
 
 | Method | Endpoint | Description |
 |--------|----------|-------------|
 | POST | `/api/user-register` | Register new user |
-| POST | `/api/login` | User login |
+| POST | `/api/admin-register` | Register new admin user |
+| POST | `/api/login` | User/Admin login |
 | POST | `/api/add-news` | Add news article |
 | GET | `/api/top-ten-news` | Get latest news |
 | GET | `/api/admin-all-list` | Get all news (admin) |
@@ -122,8 +138,10 @@ In Render Dashboard → Environment:
 
 ### Backend (.env)
 - `MONGOURI`: MongoDB connection string
-- `NODE_ENV`: `production` or `development`
-- `PORT`: Server port (default: 9000)
+  - **Local Development**: `mongodb://localhost:27017/NewsPortal`
+  - **MongoDB Atlas**: `mongodb+srv://username:password@cluster.mongodb.net/newsportal?retryWrites=true&w=majority`
+- `NODE_ENV`: `development` or `production`
+- `PORT`: Server port (default: 3000, Render sets automatically)
 
 ### Frontend (.env)
 - `VITE_API_URL`: Backend API base URL
@@ -146,17 +164,33 @@ In Render Dashboard → Environment:
 
 ## Development
 
-Local development with hot reload:
+### Local Development Setup
 
-```bash
-# Terminal 1: Backend
-cd Backend && npm run dev
+1. **Start MongoDB** (make sure it's running locally)
 
-# Terminal 2: Frontend
-cd news && npm run dev
-```
+2. **Start Backend Server:**
+   ```bash
+   cd Backend
+   npm start
+   # Runs on http://localhost:3000
+   ```
 
-Visit `http://localhost:5173` (frontend) which proxies to `http://localhost:9000/api` (backend)
+3. **Start Frontend Server:**
+   ```bash
+   cd news
+   npm run dev
+   # Runs on http://localhost:5173
+   ```
+
+4. **Test Application:**
+   - Open `http://localhost:5173` in browser
+   - Try UserSignUp/AdminSignUp and Login
+   - Frontend proxies `/api` calls to backend automatically
+
+### Development Notes
+- Hot reload enabled for both frontend and backend
+- API calls use `/api` prefix (proxied to backend)
+- File uploads saved to `Backend/uploads/` directory
 
 ## Production Build
 

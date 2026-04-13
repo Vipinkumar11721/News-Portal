@@ -182,6 +182,11 @@ function Navbar() {
                       <MdOutlineAppRegistration />  UserSignUp
                     </Link>
                   </li>
+                  <li className="nav-item">
+                    <Link className="nav-link fs-5" to="/AdminSignUp">
+                      <MdOutlineAppRegistration />  AdminSignUp
+                    </Link>
+                  </li>
 
                   <li className="nav-item">
                     <Link className="nav-link fs-5" to="/login">

@@ -17,7 +17,8 @@ NODE_ENV: production
 
 ### 3. **Code Updates Completed** ✓
 - ✓ Fixed render.yaml build and start commands
-- ✓ Updated PORT to 3000 (default Render port)
+- ✓ Updated Express to version 4 for compatibility
+- ✓ Removed PORT env var (Render sets it automatically)
 - ✓ Added uploads directory creation
 - ✓ Created .env template file
 
@@ -55,6 +56,10 @@ In the Render dashboard:
 - View logs in the Render dashboard
 
 ## 🔧 Important Notes
+
+### Express Version
+- Updated to Express 4.x for compatibility with current dependencies
+- Avoids path-to-regexp issues present in Express 5.x
 
 ### File Upload Limitations
 - Currently saves uploads to local `uploads/` directory

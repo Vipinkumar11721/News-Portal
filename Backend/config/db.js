@@ -9,6 +9,10 @@ export const dbConnect = async () => {
     }
   } catch (error) {
     console.error("Database connection failed:", error.message);
-    process.exit(1);
+    if (process.env.NODE_ENV !== 'production') {
+      process.exit(1);
+    } else {
+      console.warn("Running in production without database connection. Some features may not work.");
+    }
   }
 }
